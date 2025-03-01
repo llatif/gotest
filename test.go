@@ -8,7 +8,16 @@ import (
 	_ "modernc.org/sqlite"
 )
 
+// SQLite database file name
 const db_file string = "scratch.db"
+
+// Database schema
+const create_db_statement = `
+	CREATE TABLE IF NOT EXISTS scratch (
+	  id INTEGER NOT NULL PRIMARY KEY,
+	  time DATETIME NOT NULL,
+	  distance float
+	  );`
 
 func init_database() {
 	var err error
@@ -17,13 +26,6 @@ func init_database() {
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	create_db_statement := `
-	CREATE TABLE IF NOT EXISTS scratch (
-	  id INTEGER NOT NULL PRIMARY KEY,
-	  time DATETIME NOT NULL,
-	  distance float
-	  );`
 
 	_, err = db.Exec(create_db_statement)
 	if err != nil {
